@@ -1,0 +1,11 @@
+.timestmps_wrap div p {
+    float: left;
+    margin-right: 10px
+}
+.timestmps_wrap div {
+    float: none; 
+    clear: both; 
+    display: block;
+}
+
+
