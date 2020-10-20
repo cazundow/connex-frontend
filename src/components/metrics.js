@@ -29,7 +29,7 @@ return  <div className="col-xs-12 col-sm-6 metrics-wrap"> {loading ? <Loader /> 
 
     async function getMetrics(){
         setLoading(true);
-       let response =  await fetch('http://localhost:3000/metrics', {
+       let response =  await fetch('http://localhost:3001/metrics', {
         headers: new Headers({
             method: 'get', 
             "Authorization": `mysecrettoken`

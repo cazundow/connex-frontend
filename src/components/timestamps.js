@@ -45,7 +45,7 @@ const Timestamps = props => {
 
     async function getTime(){
         setLoading(true);
-       let response =  await fetch('http://localhost:3000', {
+       let response =  await fetch('http://localhost:3001', {
         headers: new Headers({
             method: 'get', 
             "Authorization": `mysecrettoken`
