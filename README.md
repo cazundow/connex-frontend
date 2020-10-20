@@ -1,5 +1,20 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+# Getting started
+To get the Node server running locally:
+
+## Clone this repo
+
+### install dependancies 
+npm install to install all required dependencies
+
+
+### run dev
+npm run start to start the local server
+
+
+__________________________________________________________________
 ## Available Scripts
 
 In the project directory, you can run:
