@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import Loader from './loader'; 
+import base64 from 'base-64';
 
 import './css/timestamps.css'
 
 const Timestamps = props => {
     const [timeStamps, setTimeStamps] = useState([]); 
     const [err, setErr] = useState(false); 
+    const [diffence, setDiffence] = useState(""); 
     const [loading, setLoading] = useState(false); 
     // getTime();
     useEffect(() => {
@@ -20,20 +22,22 @@ const Timestamps = props => {
         }, 30000)
        
     }, [timeStamps])
-     const t= timeStamps.sort(function(a, b) { return a- b})
+     const t= timeStamps
      .map( (item, i) =>{
-         let date = new Date(item)
-         let niceDate = date.toLocaleString(); 
-        let s = date.getSeconds();
-        let m = date.getMinutes(); 
-        let h = date.getHours();
-         let time = <p>{h}:{m}:{s}</p>
+         let date = new Date(item)        
+    if(i ===0){
 
-     return <div  key={i} >
+        return <div  key={i} >
                  <p className="time">{item}</p>
-                 {time}
+                 <p>{diffence}</p>
              </div>
-     
+        }
+        else {
+            return <div  key={i} >
+            <p className="time">{item}</p>
+            </div>
+       
+        }
      })
 
     return (
@@ -42,13 +46,13 @@ const Timestamps = props => {
             { loading ? <Loader />  : t}
         </div>
     )
-
+    
     async function getTime(){
         setLoading(true);
        let response =  await fetch('http://localhost:3001', {
         headers: new Headers({
             method: 'get', 
-            "Authorization": `mysecrettoken`
+            "Authorization":'Basic ' + base64.encode('' + ":" + 'mysecrettoken') 
           })
        }); 
         let time = await response.json();
@@ -59,7 +63,22 @@ const Timestamps = props => {
          
          setTimeStamps(newState);
          setLoading(false);
-       
+         calcDiff(time.time);
+    }
+     function calcDiff(date) {
+
+        setInterval(() => {
+        
+            let ct = Date.now(); 
+            let dif = (ct - date);
+            var days = Math.floor(dif / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((dif % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((dif % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((dif % (1000 * 60)) / 1000);
+            console.log(hours,minutes,seconds)
+            setDiffence(`${hours<10?0:''}${hours}:${minutes<10?0:''}${minutes}:${seconds<10?0:''}${seconds}`);
+        }, 1000);
+             
     }
 }
 

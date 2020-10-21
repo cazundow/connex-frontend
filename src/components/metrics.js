@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Loader from './loader'; 
 import PropTypes from 'prop-types'
+import base64 from 'base-64';
 
 import './css/metrics.css'
 
@@ -32,11 +33,10 @@ return  <div className="col-xs-12 col-sm-6 metrics-wrap"> {loading ? <Loader /> 
        let response =  await fetch('http://localhost:3001/metrics', {
         headers: new Headers({
             method: 'get', 
-            "Authorization": `mysecrettoken`
+            "Authorization":'Basic ' + base64.encode('' + ":" + 'mysecrettoken') 
           })
        }); 
         let metric = await response.text();
-        console.log(metric);
          if(metric.status != 200) {
             setErr(true)
          }
